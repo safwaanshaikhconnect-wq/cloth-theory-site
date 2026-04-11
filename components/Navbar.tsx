@@ -1,62 +1,29 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { memo, useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { CATEGORIES, BRAND_NAME } from '@/lib/constants';
+import { navigationVariants, logoVariants } from '@/lib/animations';
 
-export default function Navbar() {
+function NavbarContent() {
   const [isDark, setIsDark] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-  };
-
-  const navVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -10 },
-    visible: (i: number) => ({
+  const menuItemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: (idx: number) => ({
       opacity: 1,
       x: 0,
-      transition: {
-        delay: 0.1 * i,
-        duration: 0.5,
-      },
+      transition: { delay: 0.05 * idx, duration: 0.4 },
     }),
-  };
-
-  const logoVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
-    hover: {
-      letterSpacing: '0.15em',
-      transition: { duration: 0.3 },
-    },
   };
 
   return (
     <motion.nav
       className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-gray-800"
       style={{ zIndex: 9999 }}
-      variants={navVariants}
+      variants={navigationVariants}
       initial="hidden"
       animate="visible"
     >
@@ -97,7 +64,7 @@ export default function Navbar() {
               href="/"
               className="text-xl font-black tracking-widest uppercase text-white drop-shadow-lg"
             >
-              CLOTHTHEORY
+              {BRAND_NAME}
             </Link>
           </motion.div>
         </div>
@@ -127,7 +94,7 @@ export default function Navbar() {
             className="p-2 hover:bg-gray-900 rounded-lg transition-colors"
             whileHover={{ scale: 1.1, rotate: 180 }}
             whileTap={{ scale: 0.95 }}
-            onClick={toggleTheme}
+            onClick={() => setIsDark(!isDark)}
             aria-label="Toggle Theme"
             transition={{ duration: 0.6 }}
           >
@@ -159,23 +126,16 @@ export default function Navbar() {
       >
         <div className="w-fit rounded-xl border border-gray-800 bg-black/50 backdrop-blur-md overflow-hidden max-h-56">
           <div className="flex flex-col gap-0 py-2 px-2">
-            {['Boys', 'Girls', 'Infant', 'Men', 'Women'].map((cat, i) => (
+            {CATEGORIES.map((category, i) => (
               <motion.div
-                key={cat}
+                key={category.slug}
                 custom={i}
-                variants={{
-                  hidden: { opacity: 0, x: -20 },
-                  visible: (idx: number) => ({
-                    opacity: 1,
-                    x: 0,
-                    transition: { delay: 0.05 * idx, duration: 0.4 },
-                  }),
-                }}
+                variants={menuItemVariants}
                 initial="hidden"
                 animate="visible"
               >
                 <Link
-                  href={`/${cat.toLowerCase()}`}
+                  href={`/${category.slug}`}
                   onClick={() => setIsMenuOpen(false)}
                   className="group relative flex items-center py-3 px-4 rounded-lg text-sm font-semibold uppercase tracking-widest text-gray-300 hover:text-white transition-all duration-200 hover:bg-gray-900/50"
                 >
@@ -185,7 +145,7 @@ export default function Navbar() {
                     whileHover={{ scaleY: 1 }}
                     transition={{ duration: 0.2 }}
                   />
-                  <span className="ml-2">{cat}</span>
+                  <span className="ml-2">{category.name}</span>
                 </Link>
               </motion.div>
             ))}
@@ -195,3 +155,5 @@ export default function Navbar() {
     </motion.nav>
   );
 }
+
+export default memo(NavbarContent);

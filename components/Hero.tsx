@@ -1,58 +1,11 @@
 'use client';
 
+import { memo } from 'react';
 import { motion } from 'framer-motion';
+import { containerVariants, itemVariants, titleVariants, scrollIndicatorVariants } from '@/lib/animations';
+import { ANIMATION_DELAY } from '@/lib/constants';
 
-export default function Hero() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.34, 1.56, 0.64, 1],
-      },
-    },
-  };
-
-  const titleVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 1,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const scrollIndicatorVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { delay: 1.2, duration: 0.6 },
-    },
-    animate: {
-      y: [0, 10, 0],
-      transition: {
-        duration: 2,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      },
-    },
-  };
+function Hero() {
 
   return (
     <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-black via-zinc-950 to-black">
@@ -156,3 +109,5 @@ export default function Hero() {
     </section>
   );
 }
+
+export default memo(Hero);

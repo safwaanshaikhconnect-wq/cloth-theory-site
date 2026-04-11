@@ -1,72 +1,44 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { inViewAnimationVariants } from '@/lib/animations';
+import { AnimationType } from '@/lib/types';
 
 interface InViewAnimationProps {
   children: ReactNode;
   delay?: number;
-  duration?: number;
-  type?: 'fadeUp' | 'fadeDown' | 'slideLeft' | 'slideRight' | 'scale';
+  type?: AnimationType;
 }
 
 export default function InViewAnimation({
   children,
   delay = 0,
-  duration = 0.8,
   type = 'fadeUp',
 }: InViewAnimationProps) {
-  const variants = {
-    fadeUp: {
-      hidden: { opacity: 0, y: 40 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: { delay, duration, ease: 'easeOut' },
-      },
-    },
-    fadeDown: {
-      hidden: { opacity: 0, y: -40 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: { delay, duration, ease: 'easeOut' },
-      },
-    },
-    slideLeft: {
-      hidden: { opacity: 0, x: -60 },
-      visible: {
-        opacity: 1,
-        x: 0,
-        transition: { delay, duration, ease: 'easeOut' },
-      },
-    },
-    slideRight: {
-      hidden: { opacity: 0, x: 60 },
-      visible: {
-        opacity: 1,
-        x: 0,
-        transition: { delay, duration, ease: 'easeOut' },
-      },
-    },
-    scale: {
-      hidden: { opacity: 0, scale: 0.8 },
-      visible: {
-        opacity: 1,
-        scale: 1,
-        transition: { delay, duration, ease: 'easeOut' },
-      },
-    },
-  };
-
-  const selectedVariant = variants[type];
+  const variants = useMemo(() => {
+    const selectedVariant = inViewAnimationVariants[type];
+    if (delay > 0 && selectedVariant.visible.transition) {
+      return {
+        ...selectedVariant,
+        visible: {
+          ...selectedVariant.visible,
+          transition: {
+            ...selectedVariant.visible.transition,
+            delay,
+          },
+        },
+      };
+    }
+    return selectedVariant;
+  }, [type, delay]);
 
   return (
     <motion.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-100px' }}
-      variants={selectedVariant}
+      variants={variants}
     >
       {children}
     </motion.div>

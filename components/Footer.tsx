@@ -1,34 +1,30 @@
 'use client';
 
+import { memo } from 'react';
 import { motion } from 'framer-motion';
+import { FOOTER_LINKS, ANIMATION_DELAY } from '@/lib/constants';
 
-const footerLinks = [
-  { label: 'About', href: '#' },
-  { label: 'Stores', href: '#' },
-  { label: 'Terms', href: '#' },
-  { label: 'Privacy', href: '#' },
-];
-
-export default function Footer() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-      },
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: ANIMATION_DELAY.STAGGER,
+      delayChildren: ANIMATION_DELAY.STAGGER,
     },
-  };
+  },
+};
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
+
+function Footer() {
 
   return (
     <motion.footer
@@ -47,7 +43,7 @@ export default function Footer() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {footerLinks.map((link) => (
+          {FOOTER_LINKS.map((link) => (
             <motion.a
               key={link.label}
               href={link.href}
@@ -91,3 +87,5 @@ export default function Footer() {
     </motion.footer>
   );
 }
+
+export default memo(Footer);

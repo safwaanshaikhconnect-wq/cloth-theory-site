@@ -1,8 +1,9 @@
 'use client';
 
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 
-export default function PageTransition({
+function PageTransition({
   children,
 }: {
   children: React.ReactNode;
@@ -20,3 +21,5 @@ export default function PageTransition({
     </motion.div>
   );
 }
+
+export default memo(PageTransition);

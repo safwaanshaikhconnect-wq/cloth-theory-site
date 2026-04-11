@@ -1,42 +1,19 @@
 'use client';
 
+import { memo } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useParams } from 'next/navigation';
+import { CATEGORIES } from '@/lib/constants';
+import { containerVariants, itemVariants } from '@/lib/animations';
 
-export default function CategoryPage() {
+function CategoryPage() {
   const params = useParams();
-  const category = (params.category as string).toUpperCase();
-
-  const categoryInfo = {
-    title: category,
-    description: `Redefining everyday wear with bold cuts and uncompromising quality. This is the ${category} collection.`,
-    imageSeed: params.category as string,
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.34, 1.56, 0.64, 1],
-      },
-    },
-  };
+  const categorySlug = (params.category as string).toLowerCase();
+  const categoryData = CATEGORIES.find(cat => cat.slug === categorySlug);
+  const category = categoryData?.name || categorySlug.toUpperCase();
 
   return (
     <main className="relative z-0 min-h-screen bg-gradient-to-b from-black via-zinc-950 to-black">
@@ -50,7 +27,7 @@ export default function CategoryPage() {
         transition={{ duration: 0.8 }}
       >
         <motion.img
-          src={`https://picsum.photos/seed/${categoryInfo.imageSeed}1/1920/1080`}
+          src={`https://picsum.photos/seed/${categorySlug}1/1920/1080`}
           alt={`${category} Editorial`}
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ scale: 1.1 }}
@@ -95,7 +72,7 @@ export default function CategoryPage() {
               The New Standard
             </motion.h2>
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              {categoryInfo.description}
+              {categoryData?.description || `Redefining everyday wear with bold cuts and uncompromising quality. This is the ${category} collection.`}
             </p>
 
             <motion.button
@@ -113,7 +90,7 @@ export default function CategoryPage() {
             variants={itemVariants}
           >
             <motion.img
-              src={`https://picsum.photos/seed/${categoryInfo.imageSeed}2/800/800`}
+              src={`https://picsum.photos/seed/${categorySlug}2/800/800`}
               alt={`${category} Feature`}
               className="w-full h-full object-cover rounded-xl"
               whileHover={{ scale: 1.05 }}
@@ -148,7 +125,7 @@ export default function CategoryPage() {
                 whileHover={{ scale: 1.05 }}
               >
                 <motion.img
-                  src={`https://picsum.photos/seed/${categoryInfo.imageSeed}${num}/600/800`}
+                  src={`https://picsum.photos/seed/${categorySlug}${num}/600/800`}
                   alt={`Look ${num - 2}`}
                   className="w-full h-full object-cover"
                   whileHover={{ scale: 1.1 }}
@@ -254,3 +231,5 @@ export default function CategoryPage() {
     </main>
   );
 }
+
+export default memo(CategoryPage);

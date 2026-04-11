@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { memo, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
 interface AnimatedLinkProps {
@@ -11,7 +11,7 @@ interface AnimatedLinkProps {
   onClick?: () => void;
 }
 
-export default function AnimatedLink({
+function AnimatedLink({
   href,
   children,
   className = '',
@@ -35,3 +35,5 @@ export default function AnimatedLink({
     </motion.a>
   );
 }
+
+export default memo(AnimatedLink);

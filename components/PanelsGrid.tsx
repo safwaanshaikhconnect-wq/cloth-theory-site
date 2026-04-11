@@ -1,43 +1,14 @@
 'use client';
 
+import { memo, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { CATEGORIES, ANIMATION_DELAY } from '@/lib/constants';
+import { containerVariants, panelVariants } from '@/lib/animations';
 
-const categories = [
-  { name: 'Boys', slug: 'boys', seed: 'boys' },
-  { name: 'Girls', slug: 'girls', seed: 'girls' },
-  { name: 'Infant', slug: 'infant', seed: 'infant' },
-  { name: 'Men', slug: 'men', seed: 'men' },
-  { name: 'Women', slug: 'women', seed: 'women' },
-];
-
-export default function PanelsGrid() {
+function PanelsGrid() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const panelVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  };
 
   return (
     <section className="relative z-0 py-20 bg-gradient-to-b from-black via-zinc-950 to-black">
@@ -66,7 +37,7 @@ export default function PanelsGrid() {
         whileInView="visible"
         viewport={{ once: true, margin: '-100px' }}
       >
-        {categories.map((category, index) => (
+        {CATEGORIES.map((category, index) => (
           <motion.div
             key={category.slug}
             className="group relative h-96 overflow-hidden rounded-xl cursor-pointer"
@@ -85,10 +56,12 @@ export default function PanelsGrid() {
               }}
               transition={{ duration: 0.6 }}
             >
-              <img
+              <Image
                 src={`https://picsum.photos/seed/${category.seed}/600/800?random=${index}`}
-                alt={category.name}
+                alt={`${category.name} Collection`}
+                fill
                 className="w-full h-full object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 20vw"
               />
               {/* Overlay */}
               <motion.div
@@ -142,3 +115,5 @@ export default function PanelsGrid() {
     </section>
   );
 }
+
+export default memo(PanelsGrid);
