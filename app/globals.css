@@ -2,19 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&family=Inter:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg: #0a0a0a;
-  --fg: #ffffff;
-  --border: #333333;
-  --accent: #ff3333;
-  --font-heading: 'Montserrat', sans-serif;
+  --bg: #F5F0E8;
+  --fg: #2C2416;
+  --border: #D9CEBF;
+  --accent-gold: #C17F4A;
+  --dark-primary: #EDE8DC;
+  --dark-secondary: #7A6A55;
+  --luxury-bg: #FDF8F2;
+  --font-heading: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
+  font-family: var(--font-body);
+}
+
+body {
+  background: #F5F0E8;
+  color: #2C2416;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+}
+
+/* Liquid Glass Effect */
+.glass-effect {
+  background: rgba(193, 127, 74, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(193, 127, 74, 0.2);
+  border-radius: 12px;
+}
+
+/* Premium Gold Accent */
+.accent-gold {
+  color: var(--accent-gold);
+}
+
+.bg-accent-gold {
+  background-color: var(--accent-gold);
+}
+
+.border-accent-gold {
+  border-color: var(--accent-gold);
 }
 
 /* Animations */
@@ -97,7 +133,7 @@ html {
 
 @layer components {
   body {
-    @apply bg-black text-white font-body;
+    @apply bg-warm-beige text-text-dark font-body;
   }
 
   a {
@@ -109,7 +145,7 @@ html {
   }
 
   .pill-btn {
-    @apply px-6 py-2 border-2 border-white rounded-full text-sm font-semibold uppercase tracking-wider hover:bg-white hover:text-black transition-all duration-200;
+    @apply px-6 py-2 border-2 border-warm-accent rounded-full text-sm font-semibold uppercase tracking-wider text-warm-accent hover:bg-warm-accent hover:text-luxury-bg transition-all duration-200;
   }
 
   .accent-line {

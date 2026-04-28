@@ -139,3 +139,43 @@ export const inViewAnimationVariants = {
     },
   },
 };
+
+/* Liquid Glass Style Animations */
+export const morphVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: ANIMATION_DURATION.NORMAL },
+  },
+  animate: {
+    borderRadius: ['40% 60% 70% 30% / 40% 50% 60% 50%', '70% 30% 46% 54% / 30% 30% 70% 70%', '40% 60% 70% 30% / 40% 50% 60% 50%'],
+    transition: {
+      duration: 6,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    },
+  },
+};
+
+export const glassHoverVariants = {
+  rest: {
+    backdropFilter: 'blur(16px)',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  },
+  hover: {
+    backdropFilter: 'blur(20px)',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    transition: { duration: ANIMATION_DURATION.FAST },
+  },
+};
+
+export const floatingVariants = {
+  animate: {
+    y: [0, -10, 0],
+    transition: {
+      duration: 4,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    },
+  },
+};

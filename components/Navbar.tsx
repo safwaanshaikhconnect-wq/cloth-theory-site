@@ -21,7 +21,7 @@ function NavbarContent() {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-gray-800"
+      className="fixed top-0 left-0 right-0 z-50 bg-warm-beige backdrop-blur-md border-b border-border-light text-text-dark"
       style={{ zIndex: 9999 }}
       variants={navigationVariants}
       initial="hidden"
@@ -31,7 +31,7 @@ function NavbarContent() {
         {/* Left Section - Menu Button */}
         <div className="w-24">
           <motion.button
-            className="p-2 hover:bg-gray-900 rounded-lg transition-colors"
+            className="p-2 hover:bg-warm-light rounded-lg transition-colors"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -62,7 +62,7 @@ function NavbarContent() {
           >
             <Link
               href="/"
-              className="text-xl font-black tracking-widest uppercase text-white drop-shadow-lg"
+              className="font-heading text-2xl font-bold tracking-widest uppercase text-text-dark drop-shadow-lg"
             >
               {BRAND_NAME}
             </Link>
@@ -72,7 +72,7 @@ function NavbarContent() {
         {/* Right Section - Icons */}
         <div className="w-24 flex justify-end gap-3">
           <motion.button
-            className="p-2 hover:bg-gray-900 rounded-lg transition-colors"
+            className="p-2 hover:bg-warm-light rounded-lg transition-colors"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             aria-label="Account"
@@ -91,7 +91,7 @@ function NavbarContent() {
           </motion.button>
 
           <motion.button
-            className="p-2 hover:bg-gray-900 rounded-lg transition-colors"
+            className="p-2 hover:bg-warm-light rounded-lg transition-colors"
             whileHover={{ scale: 1.1, rotate: 180 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsDark(!isDark)}
@@ -124,7 +124,7 @@ function NavbarContent() {
         transition={{ duration: 0.2 }}
         className="absolute top-full left-6 z-40 mt-2"
       >
-        <div className="w-fit rounded-xl border border-gray-800 bg-black/50 backdrop-blur-md overflow-hidden max-h-56">
+        <div className="w-fit rounded-xl border border-border-light bg-warm-light/50 backdrop-blur-md overflow-hidden max-h-56">
           <div className="flex flex-col gap-0 py-2 px-2">
             {CATEGORIES.map((category, i) => (
               <motion.div
@@ -137,7 +137,7 @@ function NavbarContent() {
                 <Link
                   href={`/${category.slug}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="group relative flex items-center py-3 px-4 rounded-lg text-sm font-semibold uppercase tracking-widest text-gray-300 hover:text-white transition-all duration-200 hover:bg-gray-900/50"
+                  className="group relative flex items-center py-3 px-4 rounded-lg text-sm font-semibold uppercase tracking-widest text-text-muted hover:text-text-dark transition-all duration-200 hover:bg-warm-light/50"
                 >
                   <motion.div
                     className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-red-500 rounded-r opacity-0 group-hover:opacity-100"

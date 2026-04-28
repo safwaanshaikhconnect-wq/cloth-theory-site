@@ -7,9 +7,6 @@ import { Category, NavLink } from './types';
 export const CATEGORIES: Category[] = [
   { name: 'Boys', slug: 'boys', seed: 'boys', description: 'Redefining everyday wear for young innovators' },
   { name: 'Girls', slug: 'girls', seed: 'girls', description: 'Bold cuts and uncompromising quality' },
-  { name: 'Infant', slug: 'infant', seed: 'infant', description: 'Comfort meets style for little ones' },
-  { name: 'Men', slug: 'men', seed: 'men', description: 'Contemporary menswear redefined' },
-  { name: 'Women', slug: 'women', seed: 'women', description: 'Editorial fashion for the modern woman' },
 ];
 
 export const FOOTER_LINKS: NavLink[] = [

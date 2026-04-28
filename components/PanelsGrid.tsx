@@ -11,7 +11,7 @@ function PanelsGrid() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative z-0 py-20 bg-gradient-to-b from-black via-zinc-950 to-black">
+    <section className="relative z-0 py-20 bg-warm-beige">
       {/* Section Title */}
       <motion.div
         className="text-center mb-16 px-6"
@@ -20,18 +20,18 @@ function PanelsGrid() {
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-5xl md:text-6xl font-black tracking-tight mb-4">
+        <h2 className="font-heading text-5xl md:text-6xl font-bold tracking-tight mb-4 text-text-dark">
           COLLECTIONS
         </h2>
         <motion.div
-          className="h-1 w-24 bg-red-500 mx-auto rounded-full"
+          className="h-1 w-24 bg-warm-accent mx-auto rounded-full"
           layoutId="underline"
         />
       </motion.div>
 
       {/* Panels Grid */}
       <motion.div
-        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4"
+        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -61,14 +61,14 @@ function PanelsGrid() {
                 alt={`${category.name} Collection`}
                 fill
                 className="w-full h-full object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               {/* Overlay */}
               <motion.div
-                className="absolute inset-0 bg-black"
-                initial={{ opacity: 0.3 }}
+                className="absolute inset-0 bg-text-dark/20"
+                initial={{ opacity: 0.2 }}
                 animate={{
-                  opacity: hoveredIndex === index ? 0.5 : 0.3,
+                  opacity: hoveredIndex === index ? 0.4 : 0.2,
                 }}
                 transition={{ duration: 0.3 }}
               />
@@ -95,7 +95,7 @@ function PanelsGrid() {
                 </motion.h3>
 
                 <motion.button
-                  className="px-6 py-2 border-2 border-white rounded-full text-sm font-semibold uppercase tracking-wider hover:bg-white hover:text-black transition-colors"
+                  className="px-6 py-2 border-2 border-warm-accent rounded-full text-sm font-semibold uppercase tracking-wider text-warm-accent hover:bg-warm-accent hover:text-luxury-bg transition-colors"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{
                     opacity: hoveredIndex === index ? 1 : 0,

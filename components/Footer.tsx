@@ -28,7 +28,7 @@ function Footer() {
 
   return (
     <motion.footer
-      className="relative z-0 bg-gradient-to-t from-black to-zinc-950 border-t border-gray-800 py-12 px-6"
+      className="relative z-0 bg-warm-beige border-t border-border-light py-12 px-6"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -48,12 +48,12 @@ function Footer() {
               key={link.label}
               href={link.href}
               variants={itemVariants}
-              className="text-sm uppercase tracking-wider text-gray-300 hover:text-red-500 transition-colors relative group"
+              className="text-sm uppercase tracking-wider text-text-muted hover:text-warm-accent transition-colors relative group"
               whileHover={{ scale: 1.05 }}
             >
               {link.label}
               <motion.div
-                className="absolute -bottom-2 left-0 h-0.5 bg-red-500"
+                className="absolute -bottom-2 left-0 h-0.5 bg-warm-accent"
                 initial={{ width: 0 }}
                 whileHover={{ width: '100%' }}
                 transition={{ duration: 0.3 }}
@@ -70,14 +70,14 @@ function Footer() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <p className="text-gray-500 text-sm">
+          <p className="text-text-muted text-sm">
             &copy; 2026 ClothTheory. All rights reserved.
           </p>
         </motion.div>
 
         {/* Bottom Accent */}
         <motion.div
-          className="mt-8 h-0.5 w-32 bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto"
+          className="mt-8 h-0.5 w-32 bg-gradient-to-r from-transparent via-warm-accent to-transparent mx-auto"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           transition={{ duration: 0.8 }}
