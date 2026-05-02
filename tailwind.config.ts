@@ -5,6 +5,7 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -19,6 +20,22 @@ const config: Config = {
         'text-dark': '#2C2416',
         'text-muted': '#7A6A55',
         'border-light': '#D9CEBF',
+      },
+      backgroundColor: {
+        'light': '#F5F0E8',
+        'light-secondary': '#FDF8F2',
+        'dark': '#1A1714',
+        'dark-secondary': '#2C2416',
+      },
+      textColor: {
+        'light': '#2C2416',
+        'light-muted': '#7A6A55',
+        'dark': '#EDE8DC',
+        'dark-muted': '#B5A997',
+      },
+      borderColor: {
+        'light': '#D9CEBF',
+        'dark': '#3A3228',
       },
       fontFamily: {
         heading: ['Playfair Display', 'serif'],

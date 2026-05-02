@@ -11,7 +11,7 @@ function PanelsGrid() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative z-0 py-20 bg-warm-beige">
+    <section className="relative z-0 py-20 bg-light dark:bg-dark">
       {/* Section Title */}
       <motion.div
         className="text-center mb-16 px-6"
@@ -20,7 +20,7 @@ function PanelsGrid() {
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        <h2 className="font-heading text-5xl md:text-6xl font-bold tracking-tight mb-4 text-text-dark">
+        <h2 className="font-heading text-5xl md:text-6xl font-bold tracking-tight mb-4 text-light dark:text-dark">
           COLLECTIONS
         </h2>
         <motion.div
@@ -57,7 +57,7 @@ function PanelsGrid() {
               transition={{ duration: 0.6 }}
             >
               <Image
-                src={`https://picsum.photos/seed/${category.seed}/600/800?random=${index}`}
+                src={category.slug === 'boys' ? '/images/boys-collection.jpg' : category.slug === 'girls' ? '/images/girls-collection.jpg' : `https://picsum.photos/seed/${category.seed}/600/800?random=${index}`}
                 alt={`${category.name} Collection`}
                 fill
                 className="w-full h-full object-cover"
@@ -65,7 +65,7 @@ function PanelsGrid() {
               />
               {/* Overlay */}
               <motion.div
-                className="absolute inset-0 bg-text-dark/20"
+                className="absolute inset-0 bg-light/20 dark:bg-dark/30"
                 initial={{ opacity: 0.2 }}
                 animate={{
                   opacity: hoveredIndex === index ? 0.4 : 0.2,
@@ -95,7 +95,7 @@ function PanelsGrid() {
                 </motion.h3>
 
                 <motion.button
-                  className="px-6 py-2 border-2 border-warm-accent rounded-full text-sm font-semibold uppercase tracking-wider text-warm-accent hover:bg-warm-accent hover:text-luxury-bg transition-colors"
+                  className="px-6 py-2 border-2 border-warm-accent rounded-full text-sm font-semibold uppercase tracking-wider text-warm-accent hover:bg-warm-accent hover:text-light dark:hover:text-dark transition-colors"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{
                     opacity: hoveredIndex === index ? 1 : 0,

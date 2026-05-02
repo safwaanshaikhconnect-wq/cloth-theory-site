@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
+  /* Light mode */
   --bg: #F5F0E8;
   --fg: #2C2416;
   --border: #D9CEBF;
@@ -16,14 +17,26 @@
   --font-body: 'Inter', sans-serif;
 }
 
+html.dark {
+  --bg: #1A1714;
+  --fg: #EDE8DC;
+  --border: #3A3228;
+  --accent-gold: #D4956E;
+  --dark-primary: #2C2416;
+  --dark-secondary: #B5A997;
+  --luxury-bg: #251E19;
+}
+
 html {
   scroll-behavior: smooth;
   font-family: var(--font-body);
+  color-scheme: light dark;
 }
 
 body {
-  background: #F5F0E8;
-  color: #2C2416;
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -40,6 +53,11 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 12px;
 }
 
+html.dark .glass-effect {
+  background: rgba(212, 149, 110, 0.08);
+  border: 1px solid rgba(212, 149, 110, 0.25);
+}
+
 /* Premium Gold Accent */
 .accent-gold {
   color: var(--accent-gold);
@@ -47,6 +65,31 @@ h1, h2, h3, h4, h5, h6 {
 
 .bg-accent-gold {
   background-color: var(--accent-gold);
+}
+
+/* Smooth transitions for theme changes */
+* {
+  @apply transition-colors duration-300;
+}
+
+/* Dark mode specific styles */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  @apply bg-dark text-dark;
+}
+
+html.dark button,
+html.dark input,
+html.dark textarea,
+html.dark select {
+  @apply bg-dark-secondary text-dark border-dark;
+}
+
+html.dark a {
+  @apply text-dark hover:text-accent-gold;
 }
 
 .border-accent-gold {

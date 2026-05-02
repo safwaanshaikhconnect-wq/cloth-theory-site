@@ -28,7 +28,7 @@ function Footer() {
 
   return (
     <motion.footer
-      className="relative z-0 bg-warm-beige border-t border-border-light py-12 px-6"
+      className="relative z-0 bg-light dark:bg-dark-secondary border-t border-light dark:border-dark py-12 px-6"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
@@ -48,7 +48,7 @@ function Footer() {
               key={link.label}
               href={link.href}
               variants={itemVariants}
-              className="text-sm uppercase tracking-wider text-text-muted hover:text-warm-accent transition-colors relative group"
+              className="text-sm uppercase tracking-wider text-light-muted dark:text-dark-muted hover:text-warm-accent transition-colors relative group"
               whileHover={{ scale: 1.05 }}
             >
               {link.label}
@@ -70,7 +70,7 @@ function Footer() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <p className="text-text-muted text-sm">
+          <p className="text-light-muted dark:text-dark-muted text-sm">
             &copy; 2026 ClothTheory. All rights reserved.
           </p>
         </motion.div>

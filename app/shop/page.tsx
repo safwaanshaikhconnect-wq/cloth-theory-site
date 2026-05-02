@@ -6,31 +6,26 @@ import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import { containerVariants, itemVariants } from '@/lib/animations';
 
-const WOMEN_CATEGORIES = [
-  'Coord Set Pajama',
-  'Holi T-Shirt',
-  'Hoodie',
+const GIRLS_CATEGORIES = [
+  'Coord Set',
+  'Hoodies',
   'Joggers',
-  'Joggers Pack of 2',
-  'PKT Shorts',
-  'Printed Hoodie',
-  'Set',
+  'Pajamas',
+  'Printed Hoodies',
   'Shorts',
   'Sleeper',
-  'Sleeper Po2',
 ];
 
-const MEN_CATEGORIES = [
-  'Full Sleeve',
-  'Holi T-Shirt',
+const BOYS_CATEGORIES = [
+  'Full Sleeves',
   'Hoodie',
   'Joggers',
-  'Polo',
+  'Polos',
+  'Printed Full Sleeves',
   'Printed Polo',
-  'Printed Full Sleeve',
   'Shorts',
   'Slub Shorts',
-  'Solid T-Shirt',
+  'Solid Tshirts',
 ];
 
 const PRODUCTS = [
@@ -43,35 +38,59 @@ const PRODUCTS = [
 ];
 
 function ShopPage() {
-  const [activeTab, setActiveTab] = useState('BOYS');
+  const [activeTab, setActiveTab] = useState('ALL');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  const getCategories = () => {
+    if (activeTab === 'ALL') {
+      return [
+        ...GIRLS_CATEGORIES.map(cat => ({ name: cat, gender: 'Girls' })),
+        ...BOYS_CATEGORIES.map(cat => ({ name: cat, gender: 'Boys' })),
+      ];
+    } else if (activeTab === 'GIRLS') {
+      return GIRLS_CATEGORIES.map(cat => ({ name: cat, gender: 'Girls' }));
+    } else {
+      return BOYS_CATEGORIES.map(cat => ({ name: cat, gender: 'Boys' }));
+    }
+  };
+
+  const getCategoryLabel = (category: { name: string; gender: string } | string) => {
+    if (typeof category === 'string') {
+      return category;
+    }
+    return activeTab === 'ALL' ? `${category.name} - ${category.gender}` : category.name;
+  };
+
   return (
-    <div className="min-h-screen bg-warm-beige text-text-dark">
+    <div className="min-h-screen bg-light dark:bg-dark text-light dark:text-dark">
       <Navbar />
 
       <div className="flex pt-20">
         {/* Left Sidebar */}
         <motion.aside
-          className="w-64 bg-dark-primary border-r border-border-light px-6 py-8 fixed h-screen overflow-y-auto"
+          className="w-64 bg-light-secondary dark:bg-dark-secondary border-r border-light dark:border-dark px-6 py-8 fixed h-screen overflow-y-auto"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
           <div className="space-y-4">
-            {(activeTab === 'BOYS' ? WOMEN_CATEGORIES : MEN_CATEGORIES).map((category, index) => (
-              <motion.a
-                key={category}
-                href={`#${category.toLowerCase().replace(/\s+/g, '-')}`}
-                className="block text-sm text-text-dark hover:text-warm-accent transition-colors py-2 cursor-pointer"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.03 }}
-                whileHover={{ paddingLeft: '0.5rem', color: '#C17F4A' }}
-              >
-                {category}
-              </motion.a>
-            ))}
+            {getCategories().map((category, index) => {
+              const categoryObj = typeof category === 'string' ? { name: category, gender: '' } : category;
+              const key = typeof category === 'string' ? category : `${category.name}-${category.gender}`;
+              return (
+                <motion.a
+                  key={key}
+                  href={`#${categoryObj.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="block text-sm text-gray-900 dark:text-white hover:text-warm-accent dark:hover:text-warm-accent transition-colors py-2 cursor-pointer font-medium"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.03 }}
+                  whileHover={{ paddingLeft: '0.5rem' }}
+                >
+                  {getCategoryLabel(category)}
+                </motion.a>
+              );
+            })}
           </div>
         </motion.aside>
 
@@ -86,14 +105,14 @@ function ShopPage() {
           >
             {/* Tab Toggle */}
             <div className="flex gap-6">
-              {['BOYS', 'GIRLS'].map((tab) => (
+              {['ALL', 'BOYS', 'GIRLS'].map((tab) => (
                 <motion.button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`text-lg font-medium tracking-wider transition-colors ${
+                  className={`text-lg font-bold tracking-wider transition-colors ${
                     activeTab === tab
-                      ? 'text-text-dark border-b-2 border-warm-accent'
-                      : 'text-text-muted hover:text-text-dark'
+                      ? 'text-gray-900 dark:text-white border-b-2 border-warm-accent'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -105,24 +124,34 @@ function ShopPage() {
 
             {/* Filter Dropdown */}
             <motion.select
-              className="px-4 py-2 bg-transparent border border-border-light rounded text-sm text-text-dark cursor-pointer hover:border-warm-accent transition-colors focus:outline-none focus:border-warm-accent"
+              className="px-4 py-2 bg-light dark:bg-dark-secondary border border-light dark:border-dark rounded text-sm text-gray-900 dark:text-white cursor-pointer hover:border-warm-accent transition-colors focus:outline-none focus:border-warm-accent font-medium"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <option value="0" className="text-text-dark">
+              <option value="0">
                 filter (0)
               </option>
-              <option value="1" className="text-text-dark">
+              <option value="1">
                 Price: Low to High
               </option>
-              <option value="2" className="text-text-dark">
+              <option value="2">
                 Price: High to Low
               </option>
-              <option value="3" className="text-text-dark">
+              <option value="3">
                 Newest
               </option>
             </motion.select>
+            <style>{`
+              select option {
+                background-color: #2C2416;
+                color: #EDE8DC;
+              }
+              html:not(.dark) select option {
+                background-color: #F5F0E8;
+                color: #2C2416;
+              }
+            `}</style>
           </motion.div>
 
           {/* Product Grid */}
@@ -141,9 +170,9 @@ function ShopPage() {
                 onMouseLeave={() => setHoveredIndex(null)}
               >
                 {/* Product Card */}
-                <div className="relative bg-dark-primary border border-border-light rounded-lg overflow-hidden aspect-[3/4] mb-4">
+                <div className="relative bg-light-secondary dark:bg-dark-secondary border border-light dark:border-dark rounded-lg overflow-hidden aspect-[3/4] mb-4">
                   {/* Image Placeholder */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-dark-primary to-warm-light flex items-center justify-center">
+                  <div className="absolute inset-0 bg-gradient-to-br from-light-secondary dark:from-dark-secondary to-light dark:to-dark flex items-center justify-center">
                     <Image
                       src={`https://picsum.photos/seed/product-${product.id}/400/550`}
                       alt={product.name}
@@ -155,7 +184,7 @@ function ShopPage() {
 
                   {/* Coming Soon Badge */}
                   <motion.div
-                    className="absolute bottom-4 left-4 bg-amber-900 text-luxury-bg px-3 py-1 text-xs font-semibold tracking-wider"
+                    className="absolute bottom-4 left-4 bg-amber-900 text-white px-3 py-1 text-xs font-bold tracking-wider"
                     initial={{ opacity: 1 }}
                     animate={{ opacity: hoveredIndex === index ? 0.8 : 1 }}
                     transition={{ duration: 0.3 }}
@@ -165,7 +194,7 @@ function ShopPage() {
 
                   {/* Heart Icon */}
                   <motion.button
-                    className="absolute bottom-4 right-4 w-8 h-8 border-2 border-text-muted text-text-muted rounded-full flex items-center justify-center hover:bg-warm-accent hover:text-luxury-bg hover:border-warm-accent transition-colors"
+                    className="absolute bottom-4 right-4 w-8 h-8 border-2 border-light-muted dark:border-dark-muted text-light-muted dark:text-dark-muted rounded-full flex items-center justify-center hover:bg-warm-accent hover:text-light dark:hover:text-dark hover:border-warm-accent transition-colors"
                     whileHover={{ scale: 1.15 }}
                     whileTap={{ scale: 0.9 }}
                     aria-label="Add to wishlist"
@@ -189,11 +218,11 @@ function ShopPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + index * 0.02 }}
                 >
-                  <h3 className="text-sm font-medium text-text-dark truncate">
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white truncate">
                     {product.name}
                   </h3>
                   {product.color && (
-                    <p className="text-xs text-text-muted mt-1">{product.color}</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">{product.color}</p>
                   )}
                 </motion.div>
               </motion.div>

@@ -9,7 +9,7 @@ import { ANIMATION_DELAY } from '@/lib/constants';
 function Hero() {
 
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-warm-beige">
+    <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-light dark:bg-dark">
       {/* Background Gradient Animation - Warm Accent */}
       <div className="absolute inset-0 opacity-10">
         <motion.div
@@ -46,7 +46,7 @@ function Hero() {
       >
         {/* Main Title - Playfair Display */}
         <motion.h1
-          className="font-heading text-7xl md:text-8xl font-bold tracking-tighter mb-6 drop-shadow-2xl text-text-dark"
+          className="font-heading text-7xl md:text-8xl font-bold tracking-tighter mb-6 drop-shadow-2xl text-light dark:text-dark"
           variants={titleVariants}
         >
           <motion.span

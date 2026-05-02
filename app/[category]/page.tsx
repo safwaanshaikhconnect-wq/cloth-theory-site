@@ -17,7 +17,7 @@ function CategoryPage() {
   const category = categoryData?.name || categorySlug.toUpperCase();
 
   return (
-    <main className="relative z-0 min-h-screen bg-warm-beige">
+    <main className="relative z-0 min-h-screen bg-light dark:bg-dark">
       <Navbar />
 
       {/* Editorial Banner */}
@@ -38,7 +38,7 @@ function CategoryPage() {
 
         {/* Overlay */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-warm-beige via-transparent to-transparent"
+          className="absolute inset-0 bg-gradient-to-t from-light dark:from-dark via-transparent to-transparent"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -46,7 +46,7 @@ function CategoryPage() {
 
         {/* Title */}
         <motion.h1
-          className="relative z-10 text-7xl md:text-8xl font-black drop-shadow-2xl text-text-dark"
+          className="relative z-10 text-7xl md:text-8xl font-black drop-shadow-2xl text-gray-900 dark:text-white"
           variants={itemVariants}
           initial="hidden"
           animate="visible"
@@ -57,7 +57,7 @@ function CategoryPage() {
 
       {/* Feature Block */}
       <motion.section
-        className="py-20 px-6 bg-warm-beige"
+        className="py-20 px-6 bg-light dark:bg-dark"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -67,12 +67,12 @@ function CategoryPage() {
           {/* Text */}
           <motion.div variants={itemVariants}>
             <motion.h2
-              className="text-5xl md:text-6xl font-black mb-6 leading-tight text-text-dark"
+              className="text-5xl md:text-6xl font-black mb-6 leading-tight text-gray-900 dark:text-white"
               whileHover={{ textShadow: '0 0 20px rgba(193, 127, 74, 0.5)' }}
             >
               The New Standard
             </motion.h2>
-            <p className="text-lg text-text-muted mb-8 leading-relaxed">
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
               {categoryData?.description || `Redefining everyday wear with bold cuts and uncompromising quality. This is the ${category} collection.`}
             </p>
 
@@ -105,7 +105,7 @@ function CategoryPage() {
 
       {/* Lookbook Grid */}
       <motion.section
-        className="py-20 px-6 bg-warm-beige"
+        className="py-20 px-6 bg-light dark:bg-dark"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -113,7 +113,7 @@ function CategoryPage() {
       >
         <div className="max-w-7xl mx-auto">
           <motion.h2
-            className="text-4xl md:text-5xl font-black mb-12 text-center text-text-dark"
+            className="text-4xl md:text-5xl font-black mb-12 text-center text-gray-900 dark:text-white"
             variants={itemVariants}
           >
             LOOKBOOK
@@ -153,80 +153,6 @@ function CategoryPage() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </motion.section>
-
-      {/* Fit Guide */}
-      <motion.section
-        className="py-20 px-6 bg-gradient-to-b from-zinc-950 via-black to-black"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-100px' }}
-      >
-        <div className="max-w-4xl mx-auto">
-          <motion.h2
-            className="text-4xl md:text-5xl font-black mb-12 text-center"
-            variants={itemVariants}
-          >
-            FIT GUIDE
-          </motion.h2>
-
-          <motion.div
-            className="overflow-x-auto rounded-xl border border-gray-800"
-            variants={itemVariants}
-          >
-            <table className="w-full">
-              <thead className="bg-gray-900">
-                <tr>
-                  <motion.th
-                    className="px-6 py-4 text-left font-bold uppercase tracking-wider"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                  >
-                    Size
-                  </motion.th>
-                  <motion.th
-                    className="px-6 py-4 text-left font-bold uppercase tracking-wider"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    Age
-                  </motion.th>
-                  <motion.th
-                    className="px-6 py-4 text-left font-bold uppercase tracking-wider"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    Height
-                  </motion.th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { size: 'S', age: '6-8', height: '45" - 50"' },
-                  { size: 'M', age: '8-10', height: '50" - 55"' },
-                  { size: 'L', age: '10-12', height: '55" - 60"' },
-                ].map((row, i) => (
-                  <motion.tr
-                    key={i}
-                    className="border-t border-gray-800 hover:bg-gray-900/50 transition-colors"
-                    whileHover={{ backgroundColor: 'rgba(17, 24, 39, 0.5)' }}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 * i }}
-                  >
-                    <td className="px-6 py-4 font-semibold">{row.size}</td>
-                    <td className="px-6 py-4">{row.age}</td>
-                    <td className="px-6 py-4">{row.height}</td>
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
         </div>
       </motion.section>
 
