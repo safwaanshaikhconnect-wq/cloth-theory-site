@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import { containerVariants, itemVariants } from '@/lib/animations';
+import { BOYS_PRODUCTS } from '@/lib/constants';
 
 const GIRLS_CATEGORIES = [
   'Coord Set',
@@ -39,26 +40,19 @@ const PRODUCTS = [
 
 function ShopPage() {
   const [activeTab, setActiveTab] = useState('ALL');
+  const [activeCategory, setActiveCategory] = useState('all');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const getCategories = () => {
-    if (activeTab === 'ALL') {
-      return [
-        ...GIRLS_CATEGORIES.map(cat => ({ name: cat, gender: 'Girls' })),
-        ...BOYS_CATEGORIES.map(cat => ({ name: cat, gender: 'Boys' })),
-      ];
-    } else if (activeTab === 'GIRLS') {
-      return GIRLS_CATEGORIES.map(cat => ({ name: cat, gender: 'Girls' }));
-    } else {
-      return BOYS_CATEGORIES.map(cat => ({ name: cat, gender: 'Boys' }));
-    }
+    const uniqueBoysCategories = Array.from(new Set(BOYS_PRODUCTS.map(p => p.category)));
+    return uniqueBoysCategories;
   };
 
-  const getCategoryLabel = (category: { name: string; gender: string } | string) => {
-    if (typeof category === 'string') {
-      return category;
+  const getFilteredProducts = () => {
+    if (activeCategory === 'all') {
+      return BOYS_PRODUCTS;
     }
-    return activeTab === 'ALL' ? `${category.name} - ${category.gender}` : category.name;
+    return BOYS_PRODUCTS.filter(product => product.category === activeCategory);
   };
 
   return (
@@ -74,23 +68,40 @@ function ShopPage() {
           transition={{ duration: 0.5 }}
         >
           <div className="space-y-4">
-            {getCategories().map((category, index) => {
-              const categoryObj = typeof category === 'string' ? { name: category, gender: '' } : category;
-              const key = typeof category === 'string' ? category : `${category.name}-${category.gender}`;
-              return (
-                <motion.a
-                  key={key}
-                  href={`#${categoryObj.name.toLowerCase().replace(/\s+/g, '-')}`}
-                  className="block text-sm text-gray-900 dark:text-white hover:text-warm-accent dark:hover:text-warm-accent transition-colors py-2 cursor-pointer font-medium"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.03 }}
-                  whileHover={{ paddingLeft: '0.5rem' }}
-                >
-                  {getCategoryLabel(category)}
-                </motion.a>
-              );
-            })}
+            {/* All Button */}
+            <motion.button
+              onClick={() => setActiveCategory('all')}
+              className={`block text-sm font-medium py-2 cursor-pointer transition-colors ${
+                activeCategory === 'all'
+                  ? 'text-warm-accent'
+                  : 'text-gray-900 dark:text-white hover:text-warm-accent dark:hover:text-warm-accent'
+              }`}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0 }}
+              whileHover={{ paddingLeft: '0.5rem' }}
+            >
+              All
+            </motion.button>
+
+            {/* Category List */}
+            {getCategories().map((category, index) => (
+              <motion.button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`block text-sm font-medium py-2 cursor-pointer transition-colors text-left w-full ${
+                  activeCategory === category
+                    ? 'text-warm-accent'
+                    : 'text-gray-900 dark:text-white hover:text-warm-accent dark:hover:text-warm-accent'
+                }`}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: (index + 1) * 0.03 }}
+                whileHover={{ paddingLeft: '0.5rem' }}
+              >
+                {category}
+              </motion.button>
+            ))}
           </div>
         </motion.aside>
 
@@ -161,7 +172,7 @@ function ShopPage() {
             initial="hidden"
             animate="visible"
           >
-            {PRODUCTS.map((product, index) => (
+            {getFilteredProducts().map((product, index) => (
               <motion.div
                 key={product.id}
                 className="group relative"
@@ -171,10 +182,10 @@ function ShopPage() {
               >
                 {/* Product Card */}
                 <div className="relative bg-light-secondary dark:bg-dark-secondary border border-light dark:border-dark rounded-lg overflow-hidden aspect-[3/4] mb-4">
-                  {/* Image Placeholder */}
+                  {/* Image */}
                   <div className="absolute inset-0 bg-gradient-to-br from-light-secondary dark:from-dark-secondary to-light dark:to-dark flex items-center justify-center">
                     <Image
-                      src={`https://picsum.photos/seed/product-${product.id}/400/550`}
+                      src={product.images}
                       alt={product.name}
                       fill
                       className="w-full h-full object-cover"
@@ -221,9 +232,6 @@ function ShopPage() {
                   <h3 className="text-sm font-semibold text-gray-900 dark:text-white truncate">
                     {product.name}
                   </h3>
-                  {product.color && (
-                    <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">{product.color}</p>
-                  )}
                 </motion.div>
               </motion.div>
             ))}
