@@ -225,3 +225,124 @@ export const BOYS_PRODUCTS: Product[] = [
     images: '/images/boys shortlisted/Solid Tshirts/qYMfp-Photoroom.png',
   },
 ];
+
+export const GIRLS_PRODUCTS: Product[] = [
+  // Coord Set
+  {
+    id: 25,
+    name: 'Coord Set 1',
+    category: 'Coord Set',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Coord Set/ChatGPT Image Feb 17, 2026, 01_18_00 PM.png',
+  },
+  {
+    id: 26,
+    name: 'Coord Set 2',
+    category: 'Coord Set',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_awt7r6awt7r6awt7.png',
+  },
+  {
+    id: 27,
+    name: 'Coord Set 3',
+    category: 'Coord Set',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_pi4zu3pi4zu3pi4z.png',
+  },
+  // Hoodies
+  {
+    id: 28,
+    name: 'Hoodies 1',
+    category: 'Hoodies',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Hoodies/2a9ff8f8-f775-488e-9642-d40eec8c0a70.jpg',
+  },
+  {
+    id: 29,
+    name: 'Hoodies 2',
+    category: 'Hoodies',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Hoodies/780db7b2-826b-432f-99f1-b99ca7cfc5af.jpg',
+  },
+  {
+    id: 30,
+    name: 'Hoodies 3',
+    category: 'Hoodies',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Hoodies/Gemini_Generated_Image_2v5wzi2v5wzi2v5w.png',
+  },
+  // Joggers
+  {
+    id: 31,
+    name: 'Joggers 1',
+    category: 'Joggers',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Joggers/Gemini_Generated_Image_2o6ugp2o6ugp2o6u.png',
+  },
+  {
+    id: 32,
+    name: 'Joggers 2',
+    category: 'Joggers',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Joggers/Gemini_Generated_Image_7z75ub7z75ub7z75.png',
+  },
+  {
+    id: 33,
+    name: 'Joggers 3',
+    category: 'Joggers',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Joggers/Gemini_Generated_Image_v9rjijv9rjijv9rj.png',
+  },
+  // Pajamas
+  {
+    id: 34,
+    name: 'Pajamas 1',
+    category: 'Pajamas',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Pajamas/Gemini_Generated_Image_69clf769clf769cl.png',
+  },
+  // Shorts
+  {
+    id: 35,
+    name: 'Shorts 1',
+    category: 'Shorts',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Shorts/Firefly_Gemini Flash_intha image vanthu 13-14 years rendu girl model wear panni irukura maari venum and av 203503 (1)-Photoroom.png',
+  },
+  {
+    id: 36,
+    name: 'Shorts 2',
+    category: 'Shorts',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Shorts/Firefly_Gemini Flash_intha image vanthu 13-14 years rendu girl model wear panni irukura maari venum and av 203503-Photoroom.png',
+  },
+  {
+    id: 37,
+    name: 'Shorts 3',
+    category: 'Shorts',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Shorts/Gemini_Generated_Image_2ubpkf2ubpkf2ubp.png',
+  },
+  // Sleeper
+  {
+    id: 38,
+    name: 'Sleeper 1',
+    category: 'Sleeper',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Sleeper/Gemini_Generated_Image_mbojr0mbojr0mboj.png',
+  },
+  {
+    id: 39,
+    name: 'Sleeper 2',
+    category: 'Sleeper',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Sleeper/Gemini_Generated_Image_udde4budde4budde.png',
+  },
+  {
+    id: 40,
+    name: 'Sleeper 3',
+    category: 'Sleeper',
+    gender: 'girls',
+    images: '/images/girls shortlisted/Sleeper/Gemini_Generated_Image_x09j6dx09j6dx09j.png',
+  },
+];

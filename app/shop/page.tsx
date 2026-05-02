@@ -1,58 +1,112 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import { containerVariants, itemVariants } from '@/lib/animations';
-import { BOYS_PRODUCTS } from '@/lib/constants';
+import { BOYS_PRODUCTS, GIRLS_PRODUCTS } from '@/lib/constants';
+import type { Product } from '@/lib/constants';
 
-const GIRLS_CATEGORIES = [
-  'Coord Set',
-  'Hoodies',
-  'Joggers',
-  'Pajamas',
-  'Printed Hoodies',
-  'Shorts',
-  'Sleeper',
-];
+const ALL_PRODUCTS = [...BOYS_PRODUCTS, ...GIRLS_PRODUCTS];
 
-const BOYS_CATEGORIES = [
-  'Full Sleeves',
-  'Hoodie',
-  'Joggers',
-  'Polos',
-  'Printed Full Sleeves',
-  'Printed Polo',
-  'Shorts',
-  'Slub Shorts',
-  'Solid Tshirts',
-];
+const fisherYatesShuffle = (array: Product[]): Product[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
-const PRODUCTS = [
-  { id: 1, name: 'Asymmetric top', color: '+1 Color' },
-  { id: 2, name: 'T-shirt with print', color: '+1 Color' },
-  { id: 3, name: 'Low waist shorts', color: '' },
-  { id: 4, name: 'Fitted dress', color: '+2 Colors' },
-  { id: 5, name: 'Classic hoodie', color: '+3 Colors' },
-  { id: 6, name: 'Tailored jacket', color: '+1 Color' },
-];
+// Helper function to get categories by gender
+const getCategoriesByGender = (products: Product[], gender: 'boys' | 'girls') => {
+  return new Set(products.filter(p => p.gender === gender).map(p => p.category));
+};
 
 function ShopPage() {
   const [activeTab, setActiveTab] = useState('ALL');
   const [activeCategory, setActiveCategory] = useState('all');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  const shuffledAllProducts = useMemo(() => fisherYatesShuffle(ALL_PRODUCTS), []);
+
+  const getSourceProducts = () => {
+    if (activeTab === 'BOYS') return BOYS_PRODUCTS;
+    if (activeTab === 'GIRLS') return GIRLS_PRODUCTS;
+    return shuffledAllProducts;
+  };
+
   const getCategories = () => {
-    const uniqueBoysCategories = Array.from(new Set(BOYS_PRODUCTS.map(p => p.category)));
-    return uniqueBoysCategories;
+    const sourceProducts = getSourceProducts();
+    const uniqueCategories = Array.from(new Set(sourceProducts.map(p => p.category)));
+    
+    // If viewing ALL tab, add gender labels to duplicate categories
+    if (activeTab === 'ALL') {
+      const boysCategories = getCategoriesByGender(BOYS_PRODUCTS, 'boys');
+      const girlsCategories = getCategoriesByGender(GIRLS_PRODUCTS, 'girls');
+      
+      const categoriesWithLabels: Array<{ original: string; display: string; gender?: 'boys' | 'girls' }> = [];
+      
+      uniqueCategories.forEach(category => {
+        const inBoys = boysCategories.has(category);
+        const inGirls = girlsCategories.has(category);
+        
+        // If category exists in both, add both versions with labels
+        if (inBoys && inGirls) {
+          categoriesWithLabels.push({ 
+            original: `${category}-boys`, 
+            display: `${category} - Boys`,
+            gender: 'boys'
+          });
+          categoriesWithLabels.push({ 
+            original: `${category}-girls`, 
+            display: `${category} - Girls`,
+            gender: 'girls'
+          });
+        } else {
+          // Single gender category
+          categoriesWithLabels.push({ 
+            original: category, 
+            display: category,
+            gender: inBoys ? 'boys' : 'girls'
+          });
+        }
+      });
+      
+      return categoriesWithLabels;
+    }
+    
+    // For BOYS and GIRLS tabs, no gender labels needed
+    return uniqueCategories.map(category => ({
+      original: category,
+      display: category
+    }));
   };
 
   const getFilteredProducts = () => {
+    const sourceProducts = getSourceProducts();
     if (activeCategory === 'all') {
-      return BOYS_PRODUCTS;
+      return sourceProducts;
     }
-    return BOYS_PRODUCTS.filter(product => product.category === activeCategory);
+    
+    // Handle both standard categories and gender-labeled categories
+    let categoryToFilter = activeCategory;
+    let filterByGender: 'boys' | 'girls' | null = null;
+    
+    if (activeCategory.endsWith('-boys')) {
+      categoryToFilter = activeCategory.replace('-boys', '');
+      filterByGender = 'boys';
+    } else if (activeCategory.endsWith('-girls')) {
+      categoryToFilter = activeCategory.replace('-girls', '');
+      filterByGender = 'girls';
+    }
+    
+    return sourceProducts.filter(product => {
+      if (product.category !== categoryToFilter) return false;
+      if (filterByGender && product.gender !== filterByGender) return false;
+      return true;
+    });
   };
 
   return (
@@ -85,12 +139,12 @@ function ShopPage() {
             </motion.button>
 
             {/* Category List */}
-            {getCategories().map((category, index) => (
+            {getCategories().map((categoryItem, index) => (
               <motion.button
-                key={category}
-                onClick={() => setActiveCategory(category)}
+                key={categoryItem.original}
+                onClick={() => setActiveCategory(categoryItem.original)}
                 className={`block text-sm font-medium py-2 cursor-pointer transition-colors text-left w-full ${
-                  activeCategory === category
+                  activeCategory === categoryItem.original
                     ? 'text-warm-accent'
                     : 'text-gray-900 dark:text-white hover:text-warm-accent dark:hover:text-warm-accent'
                 }`}
@@ -99,7 +153,7 @@ function ShopPage() {
                 transition={{ delay: (index + 1) * 0.03 }}
                 whileHover={{ paddingLeft: '0.5rem' }}
               >
-                {category}
+                {categoryItem.display}
               </motion.button>
             ))}
           </div>
@@ -109,22 +163,26 @@ function ShopPage() {
         <main className="ml-64 flex-1 px-8 py-8">
           {/* Top Controls */}
           <motion.div
-            className="flex items-center justify-between mb-8"
+            className="flex items-center justify-between mb-8 bg-transparent"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
             {/* Tab Toggle */}
-            <div className="flex gap-6">
+            <div className="flex gap-6 bg-transparent" style={{ backgroundColor: 'transparent' }}>
               {['ALL', 'BOYS', 'GIRLS'].map((tab) => (
                 <motion.button
                   key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`text-lg font-bold tracking-wider transition-colors ${
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setActiveCategory('all');
+                  }}
+                  className={`text-lg font-bold tracking-wider transition-colors bg-transparent ${
                     activeTab === tab
                       ? 'text-gray-900 dark:text-white border-b-2 border-warm-accent'
                       : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                   }`}
+                  style={{ backgroundColor: 'transparent' }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -133,36 +191,6 @@ function ShopPage() {
               ))}
             </div>
 
-            {/* Filter Dropdown */}
-            <motion.select
-              className="px-4 py-2 bg-light dark:bg-dark-secondary border border-light dark:border-dark rounded text-sm text-gray-900 dark:text-white cursor-pointer hover:border-warm-accent transition-colors focus:outline-none focus:border-warm-accent font-medium"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              <option value="0">
-                filter (0)
-              </option>
-              <option value="1">
-                Price: Low to High
-              </option>
-              <option value="2">
-                Price: High to Low
-              </option>
-              <option value="3">
-                Newest
-              </option>
-            </motion.select>
-            <style>{`
-              select option {
-                background-color: #2C2416;
-                color: #EDE8DC;
-              }
-              html:not(.dark) select option {
-                background-color: #F5F0E8;
-                color: #2C2416;
-              }
-            `}</style>
           </motion.div>
 
           {/* Product Grid */}
