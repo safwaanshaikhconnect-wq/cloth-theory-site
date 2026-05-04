@@ -28,9 +28,9 @@ function NavbarContent() {
       initial="hidden"
       animate="visible"
     >
-      <div className="flex items-center justify-between px-6 py-4 w-full">
+      <div className="flex items-center justify-between px-4 py-3 md:px-6 md:py-4 w-full">
         {/* Left Section - Menu Button */}
-        <div className="w-24">
+        <div className="w-10 md:w-24">
           <motion.button
             className="p-2 hover:bg-light-secondary dark:hover:bg-dark text-light dark:text-dark rounded-lg transition-colors"
             whileHover={{ scale: 1.1 }}
@@ -63,7 +63,7 @@ function NavbarContent() {
           >
             <Link
               href="/"
-              className="font-heading text-2xl font-bold tracking-widest uppercase text-light dark:text-dark drop-shadow-lg"
+              className="font-heading text-xl md:text-2xl font-bold tracking-widest uppercase text-light dark:text-dark drop-shadow-lg"
             >
               {BRAND_NAME}
             </Link>
@@ -71,7 +71,7 @@ function NavbarContent() {
         </div>
 
         {/* Right Section - Icons */}
-        <div className="w-24 flex justify-end gap-3">
+        <div className="w-10 md:w-24 flex justify-end gap-3">
           <motion.button
             className="p-2 hover:bg-light-secondary dark:hover:bg-dark text-light dark:text-dark rounded-lg transition-colors"
             whileHover={{ scale: 1.1, rotate: 180 }}

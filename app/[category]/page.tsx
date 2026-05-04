@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,11 +10,73 @@ import { useParams } from 'next/navigation';
 import { CATEGORIES } from '@/lib/constants';
 import { containerVariants, itemVariants } from '@/lib/animations';
 
+// All boy shortlisted images
+const BOYS_IMAGES = [
+  '/images/boys shortlisted/Full Sleeves/Gemini_Generated_Image_18rius18rius18ri.png',
+  '/images/boys shortlisted/Full Sleeves/Gemini_Generated_Image_wv47eqwv47eqwv47.png',
+  '/images/boys shortlisted/Full Sleeves/Gemini_Generated_Image_xvmfptxvmfptxvmf.png',
+  '/images/boys shortlisted/Hoodie/Gemini_Generated_Image_1a68y31a68y31a68.png',
+  '/images/boys shortlisted/Hoodie/Gemini_Generated_Image_igprgwigprgwigpr.png',
+  '/images/boys shortlisted/Hoodie/Gemini_Generated_Image_llsctyllsctyllsc.png',
+  '/images/boys shortlisted/Joggers/Gemini_Generated_Image_7o1x087o1x087o1x.png',
+  '/images/boys shortlisted/Joggers/Gemini_Generated_Image_95ssly95ssly95ss.png',
+  '/images/boys shortlisted/Joggers/img 2.jpg',
+  '/images/boys shortlisted/Polos/Gemini_Generated_Image_f9yaibf9yaibf9ya.png',
+  '/images/boys shortlisted/Polos/Gemini_Generated_Image_fpbfc8fpbfc8fpbf.png',
+  '/images/boys shortlisted/Printed Full Sleeves/Gemini_Generated_Image_22d0fi22d0fi22d0.png',
+  '/images/boys shortlisted/Printed Polo/Gemini_Generated_Image_d1b7d3d1b7d3d1b7.png',
+  '/images/boys shortlisted/Printed Polo/Gemini_Generated_Image_h3z66th3z66th3z6.png',
+  '/images/boys shortlisted/Printed Polo/Gemini_Generated_Image_tv95iytv95iytv95.png',
+  '/images/boys shortlisted/Shorts/ChatGPT Image Mar 18, 2026, 02_05_31 PM.png',
+  '/images/boys shortlisted/Shorts/Gemini_Generated_Image_5925s85925s85925.png',
+  '/images/boys shortlisted/Shorts/Gemini_Generated_Image_syaucksyaucksyau.png',
+  '/images/boys shortlisted/Slub Shorts/Gemini_Generated_Image_8wnziu8wnziu8wnz (1).png',
+  '/images/boys shortlisted/Slub Shorts/Gemini_Generated_Image_fzlizjfzlizjfzli.png',
+  '/images/boys shortlisted/Slub Shorts/Gemini_Generated_Image_m57e6vm57e6vm57e-Photoroom.png',
+  '/images/boys shortlisted/Solid Tshirts/Gemini_Generated_Image_e2phu9e2phu9e2ph-Photoroom.png',
+  '/images/boys shortlisted/Solid Tshirts/JWiOr-Photoroom.png',
+  '/images/boys shortlisted/Solid Tshirts/qYMfp-Photoroom.png',
+];
+
+// All girls shortlisted images
+const GIRLS_IMAGES = [
+  '/images/girls shortlisted/Coord Set/ChatGPT Image Feb 17, 2026, 01_18_00 PM.png',
+  '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_69clf769clf769cl.png',
+  '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_awt7r6awt7r6awt7.png',
+  '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_pi4zu3pi4zu3pi4z.png',
+  '/images/girls shortlisted/Hoodies/2a9ff8f8-f775-488e-9642-d40eec8c0a70.jpg',
+  '/images/girls shortlisted/Hoodies/780db7b2-826b-432f-99f1-b99ca7cfc5af.jpg',
+  '/images/girls shortlisted/Hoodies/Gemini_Generated_Image_2v5wzi2v5wzi2v5w.png',
+  '/images/girls shortlisted/Joggers/Gemini_Generated_Image_2o6ugp2o6ugp2o6u.png',
+  '/images/girls shortlisted/Joggers/Gemini_Generated_Image_7z75ub7z75ub7z75.png',
+  '/images/girls shortlisted/Joggers/Gemini_Generated_Image_v9rjijv9rjijv9rj.png',
+  '/images/girls shortlisted/Pajamas/Gemini_Generated_Image_69clf769clf769cl.png',
+  '/images/girls shortlisted/Shorts/Firefly_Gemini Flash_intha image vanthu 13-14 years rendu girl model wear panni irukura maari venum and av 203503-Photoroom.png',
+  '/images/girls shortlisted/Shorts/Gemini_Generated_Image_2ubpkf2ubpkf2ubp.png',
+  '/images/girls shortlisted/Sleeper/Gemini_Generated_Image_mbojr0mbojr0mboj.png',
+  '/images/girls shortlisted/Sleeper/Gemini_Generated_Image_udde4budde4budde.png',
+  '/images/girls shortlisted/Sleeper/Gemini_Generated_Image_x09j6dx09j6dx09j.png',
+];
+
+const getRandomImages = (images: string[], count: number) => {
+  const shuffled = [...images].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
 function CategoryPage() {
   const params = useParams();
   const categorySlug = (params.category as string).toLowerCase();
   const categoryData = CATEGORIES.find(cat => cat.slug === categorySlug);
   const category = categoryData?.name || categorySlug.toUpperCase();
+
+  const selectedImages = useMemo(() => {
+    if (categorySlug === 'boys') {
+      return getRandomImages(BOYS_IMAGES, 4);
+    } else if (categorySlug === 'girls') {
+      return getRandomImages(GIRLS_IMAGES, 4);
+    }
+    return [];
+  }, []);
 
   return (
     <main className="relative z-0 min-h-screen bg-light dark:bg-dark">
@@ -22,13 +84,13 @@ function CategoryPage() {
 
       {/* Editorial Banner */}
       <motion.section
-        className="relative h-96 md:h-screen overflow-hidden flex items-center justify-center"
+        className="relative min-h-[60vh] md:min-h-screen overflow-hidden flex items-center justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
         <motion.img
-          src={`https://picsum.photos/seed/${categorySlug}1/1920/1080`}
+          src={categorySlug === 'boys' ? '/images/boys-page-main.png' : categorySlug === 'girls' ? '/images/girls-main-first.png' : `https://picsum.photos/seed/${categorySlug}1/1920/1080`}
           alt={`${category} Editorial`}
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ scale: 1.1 }}
@@ -46,7 +108,8 @@ function CategoryPage() {
 
         {/* Title */}
         <motion.h1
-          className="relative z-10 text-7xl md:text-8xl font-black drop-shadow-2xl text-gray-900 dark:text-white"
+          className="relative z-10 text-4xl md:text-6xl lg:text-8xl font-black drop-shadow-2xl"
+          style={{ color: '#FDF8F2' }}
           variants={itemVariants}
           initial="hidden"
           animate="visible"
@@ -57,7 +120,7 @@ function CategoryPage() {
 
       {/* Feature Block */}
       <motion.section
-        className="py-20 px-6 bg-light dark:bg-dark"
+        className="py-12 md:py-20 px-4 md:px-6 bg-light dark:bg-dark"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -93,7 +156,7 @@ function CategoryPage() {
             variants={itemVariants}
           >
             <motion.img
-              src={`https://picsum.photos/seed/${categorySlug}2/800/800`}
+              src={categorySlug === 'boys' ? '/images/boys-second.png' : categorySlug === 'girls' ? '/images/girls-second.png' : `https://picsum.photos/seed/${categorySlug}2/800/800`}
               alt={`${category} Feature`}
               className="w-full h-full object-cover rounded-xl"
               whileHover={{ scale: 1.05 }}
@@ -105,7 +168,7 @@ function CategoryPage() {
 
       {/* Lookbook Grid */}
       <motion.section
-        className="py-20 px-6 bg-light dark:bg-dark"
+        className="py-12 md:py-20 px-4 md:px-6 bg-light dark:bg-dark"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -113,45 +176,82 @@ function CategoryPage() {
       >
         <div className="max-w-7xl mx-auto">
           <motion.h2
-            className="text-4xl md:text-5xl font-black mb-12 text-center text-gray-900 dark:text-white"
+            className="text-2xl md:text-4xl lg:text-5xl font-black mb-8 md:mb-12 text-center text-gray-900 dark:text-white"
             variants={itemVariants}
           >
             LOOKBOOK
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[3, 4, 5, 6].map((num) => (
-              <motion.div
-                key={num}
-                className="group relative h-96 rounded-lg overflow-hidden cursor-pointer"
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-              >
-                <motion.img
-                  src={`https://picsum.photos/seed/${categorySlug}${num}/600/800`}
-                  alt={`Look ${num - 2}`}
-                  className="w-full h-full object-cover"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                />
-
-                {/* Overlay on Hover */}
-                <motion.div
-                  className="absolute inset-0 bg-text-dark/40 flex items-center justify-center"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.button
-                    className="px-6 py-2 border-2 border-warm-accent text-warm-accent rounded-full font-semibold hover:bg-warm-accent hover:text-luxury-bg transition-colors"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {(categorySlug === 'boys' || categorySlug === 'girls') && selectedImages.length > 0
+              ? selectedImages.map((imagePath, index) => (
+                  <motion.div
+                    key={index}
+                    className="group relative h-48 md:h-80 lg:h-96 rounded-lg overflow-hidden cursor-pointer"
+                    variants={itemVariants}
+                    whileHover={{ scale: 1.05 }}
                   >
-                    View
-                  </motion.button>
-                </motion.div>
-              </motion.div>
-            ))}
+                    <Image
+                      src={imagePath}
+                      alt={`Look ${index + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="25vw"
+                    />
+
+                    {/* Overlay on Hover */}
+                    <motion.div
+                      className="absolute inset-0 bg-text-dark/40 flex items-center justify-center"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Link href="/shop">
+                        <motion.button
+                          className="px-6 py-2 border-2 border-warm-accent text-warm-accent rounded-full font-semibold hover:bg-warm-accent hover:text-luxury-bg transition-colors"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          View
+                        </motion.button>
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                ))
+              : [3, 4, 5, 6].map((num) => (
+                  <motion.div
+                    key={num}
+                    className="group relative h-48 md:h-80 lg:h-96 rounded-lg overflow-hidden cursor-pointer"
+                    variants={itemVariants}
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <motion.img
+                      src={`https://picsum.photos/seed/${categorySlug}${num}/600/800`}
+                      alt={`Look ${num - 2}`}
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                    />
+
+                    {/* Overlay on Hover */}
+                    <motion.div
+                      className="absolute inset-0 bg-text-dark/40 flex items-center justify-center"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Link href="/shop">
+                        <motion.button
+                          className="px-6 py-2 border-2 border-warm-accent text-warm-accent rounded-full font-semibold hover:bg-warm-accent hover:text-luxury-bg transition-colors"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          View
+                        </motion.button>
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                ))}
           </div>
         </div>
       </motion.section>

@@ -9,7 +9,7 @@ import { ANIMATION_DELAY } from '@/lib/constants';
 function Hero() {
 
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-light dark:bg-dark">
+    <section className="relative h-screen min-h-screen flex flex-col items-center justify-center overflow-hidden bg-light dark:bg-dark">
       {/* Background Gradient Animation - Warm Accent */}
       <div className="absolute inset-0 opacity-10">
         <motion.div
@@ -46,7 +46,7 @@ function Hero() {
       >
         {/* Main Title - Playfair Display */}
         <motion.h1
-          className="font-heading text-7xl md:text-8xl font-bold tracking-tighter mb-6 drop-shadow-2xl text-light dark:text-dark"
+          className="font-heading text-3xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter mb-6 drop-shadow-2xl text-light dark:text-dark"
           variants={titleVariants}
         >
           <motion.span
@@ -73,7 +73,7 @@ function Hero() {
 
         {/* Subtitle */}
         <motion.p
-          className="text-xl md:text-2xl font-light tracking-[0.3em] text-text-muted uppercase"
+          className="text-base md:text-lg lg:text-xl xl:text-2xl font-light tracking-[0.3em] text-text-muted uppercase"
           variants={itemVariants}
         >
           WEAR THE THOUGHT
@@ -93,7 +93,7 @@ function Hero() {
         >
           <Link href="/shop">
             <motion.button
-              className="px-8 py-3 border-2 border-warm-accent rounded-full text-sm font-semibold uppercase tracking-wider text-warm-accent hover:bg-warm-accent hover:text-luxury-bg transition-colors"
+              className="px-6 md:px-8 py-2 md:py-3 border-2 border-warm-accent rounded-full text-xs md:text-sm font-semibold uppercase tracking-wider text-warm-accent hover:bg-warm-accent hover:text-luxury-bg transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -105,7 +105,7 @@ function Hero() {
 
       {/* Scroll Indicator */}
       <motion.button
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 p-3 hover:bg-warm-light/50 rounded-full transition-colors border border-border-light text-text-dark"
+        className="absolute bottom-10 left-0 right-0 mx-auto w-fit p-3 hover:bg-warm-light/50 rounded-full transition-colors border border-border-light text-text-dark"
         variants={scrollIndicatorVariants}
         initial="hidden"
         animate={['visible', 'animate']}

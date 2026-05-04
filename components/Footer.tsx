@@ -2,18 +2,6 @@
 
 import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { FOOTER_LINKS, ANIMATION_DELAY } from '@/lib/constants';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: ANIMATION_DELAY.STAGGER,
-      delayChildren: ANIMATION_DELAY.STAGGER,
-    },
-  },
-};
 
 const itemVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -28,40 +16,13 @@ function Footer() {
 
   return (
     <motion.footer
-      className="relative z-0 bg-light dark:bg-dark-secondary border-t border-light dark:border-dark py-12 px-6"
+      className="relative z-0 bg-light dark:bg-dark-secondary border-t border-light dark:border-dark py-6 md:py-12 px-4 md:px-6"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
     >
       <div className="max-w-7xl mx-auto">
-        {/* Links Section */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-8 mb-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {FOOTER_LINKS.map((link) => (
-            <motion.a
-              key={link.label}
-              href={link.href}
-              variants={itemVariants}
-              className="text-sm uppercase tracking-wider text-light-muted dark:text-dark-muted hover:text-warm-accent transition-colors relative group"
-              whileHover={{ scale: 1.05 }}
-            >
-              {link.label}
-              <motion.div
-                className="absolute -bottom-2 left-0 h-0.5 bg-warm-accent"
-                initial={{ width: 0 }}
-                whileHover={{ width: '100%' }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.a>
-          ))}
-        </motion.div>
-
         {/* Copyright */}
         <motion.div
           className="text-center"

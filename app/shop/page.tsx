@@ -116,7 +116,7 @@ function ShopPage() {
       <div className="flex pt-20">
         {/* Left Sidebar */}
         <motion.aside
-          className="w-64 bg-light-secondary dark:bg-dark-secondary border-r border-light dark:border-dark px-6 py-8 fixed h-screen overflow-y-auto"
+          className="hidden md:block w-64 bg-light-secondary dark:bg-dark-secondary border-r border-light dark:border-dark px-6 py-8 fixed h-screen overflow-y-auto"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
@@ -160,7 +160,7 @@ function ShopPage() {
         </motion.aside>
 
         {/* Main Content */}
-        <main className="ml-64 flex-1 px-8 py-8">
+        <main className="ml-0 md:ml-64 flex-1 px-4 py-4 md:px-8 md:py-8">
           {/* Top Controls */}
           <motion.div
             className="flex items-center justify-between mb-8 bg-transparent"
@@ -169,7 +169,7 @@ function ShopPage() {
             transition={{ duration: 0.5 }}
           >
             {/* Tab Toggle */}
-            <div className="flex gap-6 bg-transparent" style={{ backgroundColor: 'transparent' }}>
+            <div className="flex gap-4 md:gap-6 bg-transparent" style={{ backgroundColor: 'transparent' }}>
               {['ALL', 'BOYS', 'GIRLS'].map((tab) => (
                 <motion.button
                   key={tab}
@@ -177,7 +177,7 @@ function ShopPage() {
                     setActiveTab(tab);
                     setActiveCategory('all');
                   }}
-                  className={`text-lg font-bold tracking-wider transition-colors bg-transparent ${
+                  className={`text-base md:text-lg font-bold tracking-wider transition-colors bg-transparent ${
                     activeTab === tab
                       ? 'text-gray-900 dark:text-white border-b-2 border-warm-accent'
                       : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
@@ -193,9 +193,30 @@ function ShopPage() {
 
           </motion.div>
 
+          {/* Mobile Category Dropdown */}
+          <motion.div
+            className="block md:hidden mb-6"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <select
+              value={activeCategory}
+              onChange={(e) => setActiveCategory(e.target.value)}
+              className="w-full bg-transparent border border-warm-accent text-sm text-gray-900 dark:text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-warm-accent"
+            >
+              <option value="all">All Products</option>
+              {getCategories().map((categoryItem) => (
+                <option key={categoryItem.original} value={categoryItem.original}>
+                  {categoryItem.display}
+                </option>
+              ))}
+            </select>
+          </motion.div>
+
           {/* Product Grid */}
           <motion.div
-            className="grid grid-cols-3 gap-6"
+            className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -222,33 +243,10 @@ function ShopPage() {
                   </div>
 
                   {/* Coming Soon Badge */}
-                  <motion.div
-                    className="absolute bottom-4 left-4 bg-amber-900 text-white px-3 py-1 text-xs font-bold tracking-wider"
-                    initial={{ opacity: 1 }}
-                    animate={{ opacity: hoveredIndex === index ? 0.8 : 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    COMING SOON
-                  </motion.div>
+                  {/* Removed */}
 
                   {/* Heart Icon */}
-                  <motion.button
-                    className="absolute bottom-4 right-4 w-8 h-8 border-2 border-light-muted dark:border-dark-muted text-light-muted dark:text-dark-muted rounded-full flex items-center justify-center hover:bg-warm-accent hover:text-light dark:hover:text-dark hover:border-warm-accent transition-colors"
-                    whileHover={{ scale: 1.15 }}
-                    whileTap={{ scale: 0.9 }}
-                    aria-label="Add to wishlist"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                    </svg>
-                  </motion.button>
+                  {/* Removed */}
                 </div>
 
                 {/* Product Info */}

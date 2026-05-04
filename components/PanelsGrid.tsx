@@ -11,16 +11,16 @@ function PanelsGrid() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative z-0 py-20 bg-light dark:bg-dark">
+    <section className="relative z-0 py-12 md:py-20 bg-light dark:bg-dark">
       {/* Section Title */}
       <motion.div
-        className="text-center mb-16 px-6"
+        className="text-center mb-12 md:mb-16 px-4 md:px-6"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
       >
-        <h2 className="font-heading text-5xl md:text-6xl font-bold tracking-tight mb-4 text-light dark:text-dark">
+        <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-light dark:text-dark">
           COLLECTIONS
         </h2>
         <motion.div
@@ -31,7 +31,7 @@ function PanelsGrid() {
 
       {/* Panels Grid */}
       <motion.div
-        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4"
+        className="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -77,7 +77,7 @@ function PanelsGrid() {
             {/* Content */}
             <Link href={`/${category.slug}`}>
               <motion.div
-                className="absolute inset-0 flex flex-col items-center justify-center text-center z-10"
+                className="absolute bottom-4 left-4 z-10"
                 initial={{ opacity: 0 }}
                 animate={{
                   opacity: hoveredIndex === index ? 1 : 0.8,
@@ -85,7 +85,11 @@ function PanelsGrid() {
                 transition={{ duration: 0.3 }}
               >
                 <motion.h3
-                  className="text-4xl md:text-3xl font-black tracking-widest uppercase mb-4 drop-shadow-lg"
+                  className="text-2xl font-bold tracking-widest uppercase"
+                  style={{
+                    color: '#FDF8F2',
+                    textShadow: '2px 2px 8px rgba(0,0,0,0.8)',
+                  }}
                   animate={{
                     y: hoveredIndex === index ? -10 : 0,
                   }}
