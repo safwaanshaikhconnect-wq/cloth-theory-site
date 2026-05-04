@@ -90,7 +90,7 @@ function CategoryPage() {
         transition={{ duration: 0.8 }}
       >
         <motion.img
-          src={categorySlug === 'boys' ? '/images/boys-page-main.png' : categorySlug === 'girls' ? '/images/girls-main-first.png' : `https://picsum.photos/seed/${categorySlug}1/1920/1080`}
+          src={categorySlug === 'boys' ? '/images/boys-page-main.jpg' : categorySlug === 'girls' ? '/images/girls-main-first.jpg' : `https://picsum.photos/seed/${categorySlug}1/1920/1080`}
           alt={`${category} Editorial`}
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ scale: 1.1 }}
@@ -156,7 +156,7 @@ function CategoryPage() {
             variants={itemVariants}
           >
             <motion.img
-              src={categorySlug === 'boys' ? '/images/boys-second.png' : categorySlug === 'girls' ? '/images/girls-second.png' : `https://picsum.photos/seed/${categorySlug}2/800/800`}
+              src={categorySlug === 'boys' ? '/images/boys-second.jpg' : categorySlug === 'girls' ? '/images/girls-second.jpg' : `https://picsum.photos/seed/${categorySlug}2/800/800`}
               alt={`${category} Feature`}
               className="w-full h-full object-cover rounded-xl"
               whileHover={{ scale: 1.05 }}
