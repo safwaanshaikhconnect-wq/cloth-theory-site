@@ -3,8 +3,13 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'ClothTheory | Editorial Fashion',
-  description: 'ClothTheory - A modern fashion landing page',
+  title: 'CLOTHTHEORY',
+  description: 'Premium kids apparel. Bold cuts and uncompromising quality.',
+  openGraph: {
+    title: 'CLOTHTHEORY',
+    description: 'Premium kids apparel. Bold cuts and uncompromising quality.',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({

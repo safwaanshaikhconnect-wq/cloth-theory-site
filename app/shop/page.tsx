@@ -37,7 +37,8 @@ function ShopPage() {
     return shuffledAllProducts;
   };
 
-  const getCategories = () => {
+  const categories = useMemo(() => {
+    const getCategories = () => {
     const sourceProducts = getSourceProducts();
     const uniqueCategories = Array.from(new Set(sourceProducts.map(p => p.category)));
     
@@ -82,9 +83,12 @@ function ShopPage() {
       original: category,
       display: category
     }));
-  };
+    };
+    return getCategories();
+  }, [activeTab, shuffledAllProducts]);
 
-  const getFilteredProducts = () => {
+  const filteredProducts = useMemo(() => {
+    const getFilteredProducts = () => {
     const sourceProducts = getSourceProducts();
     if (activeCategory === 'all') {
       return sourceProducts;
@@ -107,7 +111,9 @@ function ShopPage() {
       if (filterByGender && product.gender !== filterByGender) return false;
       return true;
     });
-  };
+    };
+    return getFilteredProducts();
+  }, [activeTab, activeCategory, shuffledAllProducts]);
 
   return (
     <div className="min-h-screen bg-light dark:bg-dark text-light dark:text-dark">
@@ -115,32 +121,23 @@ function ShopPage() {
 
       <div className="flex pt-20">
         {/* Left Sidebar */}
-        <motion.aside
-          className="hidden md:block w-64 bg-light-secondary dark:bg-dark-secondary border-r border-light dark:border-dark px-6 py-8 fixed h-screen overflow-y-auto"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <aside className="hidden md:block w-64 bg-light-secondary dark:bg-dark-secondary border-r border-light dark:border-dark px-6 py-8 fixed h-screen overflow-y-auto">
           <div className="space-y-4">
             {/* All Button */}
-            <motion.button
+            <button
               onClick={() => setActiveCategory('all')}
               className={`block text-sm font-medium py-2 cursor-pointer transition-colors ${
                 activeCategory === 'all'
                   ? 'text-warm-accent'
                   : 'text-gray-900 dark:text-white hover:text-warm-accent dark:hover:text-warm-accent'
               }`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0 }}
-              whileHover={{ paddingLeft: '0.5rem' }}
             >
               All
-            </motion.button>
+            </button>
 
             {/* Category List */}
-            {getCategories().map((categoryItem, index) => (
-              <motion.button
+            {categories.map((categoryItem, index) => (
+              <button
                 key={categoryItem.original}
                 onClick={() => setActiveCategory(categoryItem.original)}
                 className={`block text-sm font-medium py-2 cursor-pointer transition-colors text-left w-full ${
@@ -148,26 +145,17 @@ function ShopPage() {
                     ? 'text-warm-accent'
                     : 'text-gray-900 dark:text-white hover:text-warm-accent dark:hover:text-warm-accent'
                 }`}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: (index + 1) * 0.03 }}
-                whileHover={{ paddingLeft: '0.5rem' }}
               >
                 {categoryItem.display}
-              </motion.button>
+              </button>
             ))}
           </div>
-        </motion.aside>
+        </aside>
 
         {/* Main Content */}
         <main className="ml-0 md:ml-64 flex-1 px-4 py-4 md:px-8 md:py-8">
           {/* Top Controls */}
-          <motion.div
-            className="flex items-center justify-between mb-8 bg-transparent"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className="flex items-center justify-between mb-8 bg-transparent">
             {/* Tab Toggle */}
             <div className="flex gap-4 md:gap-6 bg-transparent" style={{ backgroundColor: 'transparent' }}>
               {['ALL', 'BOYS', 'GIRLS'].map((tab) => (
@@ -183,49 +171,43 @@ function ShopPage() {
                       : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                   }`}
                   style={{ backgroundColor: 'transparent' }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   {tab}
                 </motion.button>
               ))}
             </div>
 
-          </motion.div>
+          </div>
 
           {/* Mobile Category Dropdown */}
-          <motion.div
-            className="block md:hidden mb-6"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
+          <div className="block md:hidden mb-6">
+            <label htmlFor="category-filter" className="sr-only">Filter</label>
             <select
+              id="category-filter"
               value={activeCategory}
               onChange={(e) => setActiveCategory(e.target.value)}
               className="w-full bg-transparent border border-warm-accent text-sm text-gray-900 dark:text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-warm-accent"
             >
               <option value="all">All Products</option>
-              {getCategories().map((categoryItem) => (
+              {categories.map((categoryItem) => (
                 <option key={categoryItem.original} value={categoryItem.original}>
                   {categoryItem.display}
                 </option>
               ))}
             </select>
-          </motion.div>
+          </div>
 
           {/* Product Grid */}
           <motion.div
             className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
           >
-            {getFilteredProducts().map((product, index) => (
+            {filteredProducts.map((product, index) => (
               <motion.div
                 key={product.id}
                 className="group relative"
-                variants={itemVariants}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
@@ -239,6 +221,7 @@ function ShopPage() {
                       fill
                       className="w-full h-full object-cover"
                       sizes="(max-width: 1024px) 33vw, 25vw"
+                      priority={index === 0}
                     />
                   </div>
 
@@ -250,15 +233,11 @@ function ShopPage() {
                 </div>
 
                 {/* Product Info */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.02 }}
-                >
+                <div>
                   <h3 className="text-sm font-semibold text-gray-900 dark:text-white truncate">
                     {product.name}
                   </h3>
-                </motion.div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
