@@ -41,9 +41,7 @@ const BOYS_IMAGES = [
 // All girls shortlisted images
 const GIRLS_IMAGES = [
   '/images/girls shortlisted/Coord Set/ChatGPT Image Feb 17, 2026, 01_18_00 PM.jpg',
-  '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_69clf769clf769cl.jpg',
   '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_awt7r6awt7r6awt7.jpg',
-  '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_pi4zu3pi4zu3pi4z.jpg',
   '/images/girls shortlisted/Hoodies/2a9ff8f8-f775-488e-9642-d40eec8c0a70.jpg',
   '/images/girls shortlisted/Hoodies/780db7b2-826b-432f-99f1-b99ca7cfc5af.jpg',
   '/images/girls shortlisted/Hoodies/Gemini_Generated_Image_2v5wzi2v5wzi2v5w.jpg',

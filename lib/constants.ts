@@ -242,30 +242,23 @@ export const GIRLS_PRODUCTS: Product[] = [
     gender: 'girls',
     images: '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_awt7r6awt7r6awt7.jpg',
   },
-  {
-    id: 27,
-    name: 'Coord Set 3',
-    category: 'Coord Set',
-    gender: 'girls',
-    images: '/images/girls shortlisted/Coord Set/Gemini_Generated_Image_pi4zu3pi4zu3pi4z.jpg',
-  },
   // Hoodies
   {
-    id: 28,
+    id: 27,
     name: 'Hoodies 1',
     category: 'Hoodies',
     gender: 'girls',
     images: '/images/girls shortlisted/Hoodies/2a9ff8f8-f775-488e-9642-d40eec8c0a70.jpg',
   },
   {
-    id: 29,
+    id: 28,
     name: 'Hoodies 2',
     category: 'Hoodies',
     gender: 'girls',
     images: '/images/girls shortlisted/Hoodies/780db7b2-826b-432f-99f1-b99ca7cfc5af.jpg',
   },
   {
-    id: 30,
+    id: 29,
     name: 'Hoodies 3',
     category: 'Hoodies',
     gender: 'girls',
@@ -273,21 +266,21 @@ export const GIRLS_PRODUCTS: Product[] = [
   },
   // Joggers
   {
-    id: 31,
+    id: 30,
     name: 'Joggers 1',
     category: 'Joggers',
     gender: 'girls',
     images: '/images/girls shortlisted/Joggers/Gemini_Generated_Image_2o6ugp2o6ugp2o6u.jpg',
   },
   {
-    id: 32,
+    id: 31,
     name: 'Joggers 2',
     category: 'Joggers',
     gender: 'girls',
     images: '/images/girls shortlisted/Joggers/Gemini_Generated_Image_7z75ub7z75ub7z75.jpg',
   },
   {
-    id: 33,
+    id: 32,
     name: 'Joggers 3',
     category: 'Joggers',
     gender: 'girls',
@@ -295,7 +288,7 @@ export const GIRLS_PRODUCTS: Product[] = [
   },
   // Pajamas
   {
-    id: 34,
+    id: 33,
     name: 'Pajamas 1',
     category: 'Pajamas',
     gender: 'girls',
@@ -303,21 +296,21 @@ export const GIRLS_PRODUCTS: Product[] = [
   },
   // Shorts
   {
-    id: 35,
+    id: 34,
     name: 'Shorts 1',
     category: 'Shorts',
     gender: 'girls',
     images: '/images/girls shortlisted/Shorts/Firefly_Gemini Flash_intha image vanthu 13-14 years rendu girl model wear panni irukura maari venum and av 203503-Photoroom.jpg',
   },
   {
-    id: 36,
+    id: 35,
     name: 'Shorts 2',
     category: 'Shorts',
     gender: 'girls',
     images: '/images/girls shortlisted/Shorts/Firefly_Gemini Flash_intha image vanthu 13-14 years rendu girl model wear panni irukura maari venum and av 203503-Photoroom.jpg',
   },
   {
-    id: 37,
+    id: 36,
     name: 'Shorts 3',
     category: 'Shorts',
     gender: 'girls',
@@ -325,21 +318,21 @@ export const GIRLS_PRODUCTS: Product[] = [
   },
   // Sleeper
   {
-    id: 38,
+    id: 37,
     name: 'Sleeper 1',
     category: 'Sleeper',
     gender: 'girls',
     images: '/images/girls shortlisted/Sleeper/Gemini_Generated_Image_mbojr0mbojr0mboj.jpg',
   },
   {
-    id: 39,
+    id: 38,
     name: 'Sleeper 2',
     category: 'Sleeper',
     gender: 'girls',
     images: '/images/girls shortlisted/Sleeper/Gemini_Generated_Image_udde4budde4budde.jpg',
   },
   {
-    id: 40,
+    id: 39,
     name: 'Sleeper 3',
     category: 'Sleeper',
     gender: 'girls',
